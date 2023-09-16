@@ -1,0 +1,18 @@
+version: '3.5'
+services:
+#  api: # API
+#    build: .
+#    hostname: api
+#    depends_on:
+#      - db
+#    expose:
+#      - "80"
+  db: # Banco de dados
+    image: postgres
+    command: postgres -c log_min_messages=FATAL
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: psp
+      POSTGRES_DB: PaymentServiceProvider
+    ports:
+      - "5432:5432"
