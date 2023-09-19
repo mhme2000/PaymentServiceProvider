@@ -35,7 +35,8 @@ Payment Service Provider em .NET 7. Projeto voltado para exercitar conceitos com
 ## 💻 Como executar
 
 - Pré requisitos
-  - SDK .NET 7.0;
+  - Docker;
+  - SDK .NET 7.0 (caso queira debugar);
 
 - Clone o projeto com: `git clone https://github.com/mhme2000/PaymentServiceProvider.git`
 - Acesse o projeto, e execute: `docker compose up --build -d`
