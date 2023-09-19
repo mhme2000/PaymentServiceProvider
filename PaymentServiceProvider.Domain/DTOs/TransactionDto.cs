@@ -7,6 +7,7 @@ public class TransactionDto
     public double Amount { get; set; }
     public string Description { get; set; }
     public PaymentMethod PaymentMethod { get; set; }
+    public uint NumberOfInstallments { get; set; }
     public string CardNumber { get; set; }
     public string CardName { get; set; }
     public DateTime CardExpireDate { get; set; }

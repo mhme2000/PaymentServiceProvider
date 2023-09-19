@@ -6,6 +6,6 @@ namespace PaymentServiceProvider.Infrastructure.Contexts;
 public class TransactionContext : DbContext
 {
     public TransactionContext(DbContextOptions<TransactionContext> options): base(options){}
-    public DbSet<Transaction> Transaction { get; set; }
-    public DbSet<Payable> Payable { get; set; }
+    public DbSet<Transaction>? Transaction { get; set; }
+    public DbSet<Payable>? Payable { get; set; }
 }

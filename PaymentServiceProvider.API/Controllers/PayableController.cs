@@ -8,10 +8,12 @@ namespace PaymentServiceProvider.API.Controllers;
 public class PayableController : ControllerBase
 {
     private readonly IGetBalancesUseCase _getBalancesUseCase;
+    private readonly IProcessPaymentsByDateUseCase _processPaymentsByDateUseCase;
 
-    public PayableController(IGetBalancesUseCase getBalancesUseCase)
+    public PayableController(IGetBalancesUseCase getBalancesUseCase, IProcessPaymentsByDateUseCase processPaymentsByDateUseCase)
     {
         _getBalancesUseCase = getBalancesUseCase;
+        _processPaymentsByDateUseCase = processPaymentsByDateUseCase;
     }
 
     [HttpGet]
@@ -19,5 +21,12 @@ public class PayableController : ControllerBase
     {
         var balanceDto = _getBalancesUseCase.Execute(true);
         return Ok(balanceDto);
+    }
+
+    [HttpPut]
+    public IActionResult ProcessPaymentByDate([FromQuery] DateTime date)
+    {
+        _processPaymentsByDateUseCase.Execute(date);
+        return Ok();
     }
 }

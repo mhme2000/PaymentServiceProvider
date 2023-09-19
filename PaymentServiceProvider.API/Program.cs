@@ -14,6 +14,7 @@ builder.Services.AddScoped<IPayableRepository, PayableRepository>();
 builder.Services.AddScoped<ICreateTransactionUseCase, CreateTransactionUseCase>();
 builder.Services.AddScoped<IGetListTransactionsUseCase, GetListTransactionsUseCase>();
 builder.Services.AddScoped<IGetBalancesUseCase, GetBalancesUseCase>();
+builder.Services.AddScoped<IProcessPaymentsByDateUseCase, ProcessPaymentsByDateUseCase>();
 
 builder.Services.AddDbContext<TransactionContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))); 
@@ -23,9 +24,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
-await using (var context = (TransactionContext) app.Services.GetRequiredService(typeof(TransactionContext)))
+using (var scope = app.Services.CreateScope())
 {
-    await context.Database.EnsureCreatedAsync();
+    var dataContext = scope.ServiceProvider.GetRequiredService<TransactionContext>();
+    dataContext.Database.Migrate();
 }
 app.UseSwagger();
 app.UseSwaggerUI(); 

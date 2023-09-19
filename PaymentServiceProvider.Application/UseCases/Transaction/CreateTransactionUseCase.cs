@@ -15,7 +15,7 @@ public class CreateTransactionUseCase : ICreateTransactionUseCase
 
     public Guid Execute(TransactionDto transactionDto)
     {
-        var transaction = new Domain.Entities.Transaction(transactionDto.Amount, transactionDto.Description, transactionDto.PaymentMethod, transactionDto.CardNumber, transactionDto.CardName, transactionDto.CardExpireDate, transactionDto.CardCvv);
+        var transaction = new Domain.Entities.Transaction(transactionDto.Amount, transactionDto.Description, transactionDto.PaymentMethod, transactionDto.NumberOfInstallments, transactionDto.CardNumber, transactionDto.CardName, transactionDto.CardExpireDate, transactionDto.CardCvv);
         var id = _transactionRepository.Create(transaction);
         return id;
     }
