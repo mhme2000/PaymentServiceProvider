@@ -25,10 +25,13 @@ Payment Service Provider em .NET 7. Projeto voltado para exercitar conceitos com
 - [x] Criar uma transação
 - [x] Listar transações
 - [x] Listar saldo disponível e saldo retido
+- [X] Permitir transações parceladas
+- [ ] Criar testes unitários para a camada de Repositório
+- [ ] Criar testes unitários para a camada de Casos de Uso
+- [ ] Criar testes unitários para a camada de Controladores
 - [ ] Criar entidade usuário e vincular as transações
 - [ ] Adicionar autenticação JWT
 - [ ] Configurar pipeline via github actions
-- [ ] Permitir transações parceladas
 
 ---
 
