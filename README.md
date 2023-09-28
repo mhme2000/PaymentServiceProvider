@@ -31,6 +31,7 @@ Payment Service Provider em .NET 7. Projeto voltado para exercitar conceitos com
 - [ ] Criar testes unitários para a camada de Controladores
 - [ ] Criar entidade usuário e vincular as transações
 - [ ] Adicionar autenticação JWT
+- [X] Incluir sonarcloud no projeto 
 - [ ] Configurar pipeline via github actions
 
 ---
