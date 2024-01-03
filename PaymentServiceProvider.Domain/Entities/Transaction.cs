@@ -4,6 +4,9 @@ namespace PaymentServiceProvider.Domain.Entities;
 
 public class Transaction : Entity
 {
+    private const double FeeDebitCard = 0.03;
+    private const double FeeCreditCard = 0.05;
+
     public Transaction(double amount, string description, PaymentMethod paymentMethod, uint numberOfInstallments, string cardNumber, string cardName, DateTime cardExpireDate, string cardCvv)
     {
         Id = Guid.NewGuid();
@@ -31,6 +34,20 @@ public class Transaction : Entity
     [JsonIgnore]
     public ICollection<Payable> Payables { get; private set; }
 
+    public double TotalWithoutFees()
+    {
+        return Amount - (Amount * Fee());
+    }
+    
+    public double TotalAvailableWithoutFees()
+    {
+        return Payables.Where(t=> t.Status == StatusPayable.Payed).Sum(t => t.Amount);
+    }
+
+    private double Fee()
+    {
+        return PaymentMethod == PaymentMethod.CreditCard ? FeeCreditCard : FeeDebitCard;
+    }
     private void CreatePayables(double amount, PaymentMethod paymentMethod, uint numberOfInstallments)
     {
         for (var i = 0; i < numberOfInstallments; i++)
@@ -44,14 +61,14 @@ public class Transaction : Entity
 
     private Payable CreatePayableByCreditCard(double amount)
     {
-        var feeCreditCard = 0.05 * amount;
-        return new Payable(amount, StatusPayable.WaitingFunds, DateTime.Now.AddDays(30) ,feeCreditCard, Id);
+        var feePayable = Fee() * amount;
+        return new Payable(amount, StatusPayable.WaitingFunds, DateTime.Now.AddDays(30) ,feePayable, Id);
     }
     
     private Payable CreatePayableByDebitCard(double amount)
     {
-        var feeDebitCard = 0.03 * amount;
-        return new Payable(amount, StatusPayable.Payed, DateTime.Now ,feeDebitCard, Id);
+        var feePayable = Fee() * amount;
+        return new Payable(amount, StatusPayable.Payed, DateTime.Now ,feePayable, Id);
     }
 }
 
